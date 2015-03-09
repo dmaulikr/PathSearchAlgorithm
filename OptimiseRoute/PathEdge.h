@@ -11,10 +11,9 @@
 @class PathNode;
 
 @interface PathEdge : NSObject
-    @property (assign) NSUInteger cost;
+    @property (assign) CGFloat cost;
     @property (nonatomic, weak) PathNode *nodeOne;
     @property (nonatomic, weak) PathNode *nodeTwo;
-
 -(void) printEdge;
 
 @end // PathEdge

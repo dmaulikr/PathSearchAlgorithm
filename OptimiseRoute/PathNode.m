@@ -10,26 +10,40 @@
 
 @implementation PathNode
 
+-(id) init {
+    self = [super init];
+    
+    if(self) {
+        _neighbours = [[NSMutableSet alloc] init];
+    }
+    
+    return self;
+}
+
 -(void) addNeighbourwithEdge:(PathEdge *)neighbour {
 
-    __block PathNode *neighbourRef = neighbour.nodeTwo;
-    __block PathEdge *edgeRef = nil;
-    
-    [_neighbours enumerateObjectsUsingBlock:^(PathNode *obj, BOOL *stop) {
-        if([obj.name isEqualToString:neighbourRef.name]) {
-            neighbourRef = obj;
-            edgeRef = neighbour; // Edge already exists. Update the cost
-            *stop = YES;
-        }
-    }];
-    
-    if(edgeRef == nil) {
+    if(![_neighbours containsObject:neighbour]) {
         [_neighbours addObject:neighbour];
     }
-    else {
-        edgeRef.cost = neighbour.cost; // Overwrite existing cost
-    }
     
+//    __block PathNode *neighbourNodeOneRef = node;
+//    __block PathEdge *neighbourNodeTwoEdgeRef = neighbour;
+//    __block PathEdge *edgeRef = nil;
+//    
+//    [_neighbours enumerateObjectsUsingBlock:^(PathEdge *obj, BOOL *stop) {
+//        if([obj.nodeOne.name isEqualToString:neighbourNodeOneRef.name]) {
+//            neighbourRef = obj;
+//            edgeRef = neighbour; // Edge already exists. Update the cost
+//            *stop = YES;
+//        }
+//    }];
+//    
+//    if(edgeRef == nil) {
+//        [_neighbours addObject:neighbour];
+//    }
+//    else {
+//        edgeRef.cost = neighbour.cost; // Overwrite existing cost
+//    }
 }
 
 -(PathNode *) fetchNeighbourWithName : (NSString *)name {
@@ -51,7 +65,7 @@
 
 -(void) printNeighboursWithCost {
     for (PathEdge *edge in _neighbours) {
-        NSLog(@"%@ %@ %lu", edge.nodeOne, edge.nodeTwo, edge.cost);
+        NSLog(@"%@ %@ %F", edge.nodeOne.name , edge.nodeTwo.name, edge.cost);
     }
 }
 

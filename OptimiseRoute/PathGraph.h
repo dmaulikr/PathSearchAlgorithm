@@ -15,7 +15,7 @@
 
 -(void) insertNodeFrom:(PathNode *)from
                 ToNode:(PathNode *)targetNode
-              WithCoSt:(NSUInteger)cost;
+              WithCost:(NSUInteger)cost;
 
 -(void) insertNodeFrom:(PathNode *)from
               WithEdge:(PathEdge *)edge;
