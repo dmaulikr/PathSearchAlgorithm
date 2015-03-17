@@ -14,6 +14,4 @@
     @property (assign) CGFloat cost;
     @property (nonatomic, weak) PathNode *nodeOne;
     @property (nonatomic, weak) PathNode *nodeTwo;
--(void) printEdge;
-
 @end // PathEdge

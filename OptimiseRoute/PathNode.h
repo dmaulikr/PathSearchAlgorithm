@@ -12,14 +12,12 @@
 @interface PathNode : NSObject
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSMutableSet *neighbours; // array of edge which stores the target node
+@property (nonatomic, strong) NSMutableSet *neighbourEdges; // array of edge which stores the target node
 
 -(void) addNeighbourwithEdge:(PathEdge *)neighbour;
 
 -(PathNode *) fetchNeighbourWithName : (NSString *)name;
 
--(void) printNeighbours;
 -(void) printNeighboursWithCost;
-
 
 @end // PathNode

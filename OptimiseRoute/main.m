@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "PathGraph.h"
 
+#import <string.h>
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
@@ -18,12 +20,18 @@ int main(int argc, const char * argv[]) {
         PathGraph *graph = [[PathGraph alloc] init];
         
         for(int i = 0; i < numberOfK; i++) {
-            int cityOneCodeName;
-            int cityTwoCodeName;
             CGFloat cost;
-            scanf("%d %d %lf", &cityOneCodeName, &cityTwoCodeName, &cost);
-            NSString *cityOne = [NSString stringWithFormat:@"%d",cityOneCodeName];
-            NSString *cityTwo = [NSString stringWithFormat:@"%d",cityTwoCodeName];
+            char cityOneName[10000];
+            char cityTwoName[10000];
+            scanf("%s %s %lf", cityOneName, cityTwoName, &cost);
+            NSString *cityOne = [NSString stringWithCString:cityOneName
+                                                    encoding:NSUTF8StringEncoding];
+            
+            NSString *cityTwo = [NSString stringWithCString:cityTwoName
+                                                   encoding:NSUTF8StringEncoding];
+
+//            NSString *cityOne = [NSString stringWithFormat:@"%d",cityOneCodeName];
+//            NSString *cityTwo = [NSString stringWithFormat:@"%d",cityTwoCodeName];
 //            NSLog(@"City Names %@ %@",cityOne, cityTwo);
             
             // Converting int to string for easy printing as no integer arthemetic needs to be done on city indentities.
@@ -34,6 +42,10 @@ int main(int argc, const char * argv[]) {
         }
         
         [graph printGraph];
+        
+        [graph printCheapestFirstSearchFromNode:@"A"
+                                     ToGoalNode:@"H"];
+        
         
     }
     return 0;

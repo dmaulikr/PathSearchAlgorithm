@@ -10,7 +10,4 @@
 
 @implementation PathEdge
 
--(void) printEdge {
-    
-}
 @end

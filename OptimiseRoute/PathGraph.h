@@ -13,18 +13,23 @@
 
 @interface PathGraph : NSObject
 
--(void) insertNodeFrom:(PathNode *)from
-                ToNode:(PathNode *)targetNode
-              WithCost:(NSUInteger)cost;
-
--(void) insertNodeFrom:(PathNode *)from
-              WithEdge:(PathEdge *)edge;
-
 -(void) insertPathFromNode:(NSString *)nodeFrom
                     ToNode:(NSString *)nodeTo
                   WithCost:(CGFloat)cost;
 
 -(void) printGraph;
+
+-(void) printCheapestFirstSearchFromNode : (NSString *)start
+                              ToGoalNode : (NSString *)goal;
+
+-(void) explorePathWithFrontier:(NSMutableArray *) frontiers
+                UnexploredNodes:(NSMutableSet *) unexploredNodes
+                  ExploredNodes:(NSMutableSet *) exploredNodes
+                        ForGoal:(PathNode*) goal
+                         OnPath:(NSMutableArray *) currentPathNodes
+            WithTotalKnownPaths:(NSMutableArray *) pathList;
+
+-(PathNode *) pathNodeWithName:(NSString *)nodeName;
 
 @property (nonatomic, strong) NSMutableSet *nodes;
 
