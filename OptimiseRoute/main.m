@@ -30,10 +30,6 @@ int main(int argc, const char * argv[]) {
             NSString *cityTwo = [NSString stringWithCString:cityTwoName
                                                    encoding:NSUTF8StringEncoding];
 
-//            NSString *cityOne = [NSString stringWithFormat:@"%d",cityOneCodeName];
-//            NSString *cityTwo = [NSString stringWithFormat:@"%d",cityTwoCodeName];
-//            NSLog(@"City Names %@ %@",cityOne, cityTwo);
-            
             // Converting int to string for easy printing as no integer arthemetic needs to be done on city indentities.
             [graph insertPathFromNode:cityOne
                                ToNode:cityTwo
@@ -44,7 +40,7 @@ int main(int argc, const char * argv[]) {
         [graph printGraph];
         
         [graph printCheapestFirstSearchFromNode:@"A"
-                                     ToGoalNode:@"H"];
+                                     ToGoalNode:@"F"];
         
         
     }

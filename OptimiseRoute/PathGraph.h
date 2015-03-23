@@ -10,8 +10,11 @@
 
 #import "PathEdge.h"
 #import "PathNode.h"
+#import "Path.h"
 
 @interface PathGraph : NSObject
+
+@property (nonatomic, strong) NSMutableSet *nodes;
 
 -(void) insertPathFromNode:(NSString *)nodeFrom
                     ToNode:(NSString *)nodeTo
@@ -22,15 +25,15 @@
 -(void) printCheapestFirstSearchFromNode : (NSString *)start
                               ToGoalNode : (NSString *)goal;
 
--(void) explorePathWithFrontier:(NSMutableArray *) frontiers
+-(void) explorePathWithFrontier:(NSMutableArray *)frontiers
                 UnexploredNodes:(NSMutableSet *) unexploredNodes
                   ExploredNodes:(NSMutableSet *) exploredNodes
                         ForGoal:(PathNode*) goal
-                         OnPath:(NSMutableArray *) currentPathNodes
+                         OnPath:(Path *) currentPath
             WithTotalKnownPaths:(NSMutableArray *) pathList;
 
--(PathNode *) pathNodeWithName:(NSString *)nodeName;
-
-@property (nonatomic, strong) NSMutableSet *nodes;
+// Utilities
+- (Path *)fetchCheapestPathFromFrontier : (NSMutableArray *)frontier;
+- (PathNode *) pathNodeWithName:(NSString *)nodeName;
 
 @end // Graph

@@ -45,4 +45,7 @@
     }
 }
 
+-(NSString *) description {
+    return _name;
+}
 @end

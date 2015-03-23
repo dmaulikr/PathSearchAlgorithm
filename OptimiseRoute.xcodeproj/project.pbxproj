@@ -11,6 +11,7 @@
 		F04711281AADEA3A005DF7AB /* PathGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = F04711271AADEA3A005DF7AB /* PathGraph.m */; };
 		F047112B1AAE0856005DF7AB /* PathNode.m in Sources */ = {isa = PBXBuildFile; fileRef = F047112A1AAE0856005DF7AB /* PathNode.m */; };
 		F047112E1AAE087B005DF7AB /* PathEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = F047112D1AAE087B005DF7AB /* PathEdge.m */; };
+		F04BD9C21AB8969800AA4F38 /* Path.m in Sources */ = {isa = PBXBuildFile; fileRef = F04BD9C11AB8969800AA4F38 /* Path.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,8 @@
 		F047112A1AAE0856005DF7AB /* PathNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathNode.m; sourceTree = "<group>"; };
 		F047112C1AAE087B005DF7AB /* PathEdge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathEdge.h; sourceTree = "<group>"; };
 		F047112D1AAE087B005DF7AB /* PathEdge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathEdge.m; sourceTree = "<group>"; };
+		F04BD9C01AB8969800AA4F38 /* Path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Path.h; sourceTree = "<group>"; };
+		F04BD9C11AB8969800AA4F38 /* Path.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Path.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +84,8 @@
 				F047112D1AAE087B005DF7AB /* PathEdge.m */,
 				F04711291AAE0856005DF7AB /* PathNode.h */,
 				F047112A1AAE0856005DF7AB /* PathNode.m */,
+				F04BD9C01AB8969800AA4F38 /* Path.h */,
+				F04BD9C11AB8969800AA4F38 /* Path.m */,
 			);
 			name = Graph;
 			sourceTree = "<group>";
@@ -141,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F04BD9C21AB8969800AA4F38 /* Path.m in Sources */,
 				F047112B1AAE0856005DF7AB /* PathNode.m in Sources */,
 				F04711201AADAD57005DF7AB /* main.m in Sources */,
 				F04711281AADEA3A005DF7AB /* PathGraph.m in Sources */,
@@ -258,6 +264,7 @@
 				F04711251AADAD57005DF7AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

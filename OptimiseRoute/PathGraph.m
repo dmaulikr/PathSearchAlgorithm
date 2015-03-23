@@ -112,10 +112,6 @@
     // Array over mutableset as order is important and seek operation isn't.
     NSMutableArray *frontiers = [NSMutableArray arrayWithCapacity:unexploredNodes.count];
     
-    // Each object is an array of path nodes leading to.
-    NSMutableArray *pathList = [NSMutableArray array];
-    NSMutableArray *currentPath = [NSMutableArray array]; // Currently explored path.
-    
     PathNode *start = nil;
     PathNode *goal = nil;
     
@@ -128,6 +124,11 @@
         }
     }
     
+    // Each object is an array of path nodes leading to.
+    NSMutableArray *pathList = [NSMutableArray array];
+    Path *currentPath = [[Path alloc] init]; // Currently explored path.
+    [currentPath.nodes addObject:start];
+
     if(nil == start ||
        nil == goal) {
         return;
@@ -136,7 +137,7 @@
     // Initial Setup
     [unexploredNodes removeObject:start];
     [exploredNodes addObject:start];
-    [frontiers addObject:start];
+    [frontiers addObject:currentPath];
     
     [self explorePathWithFrontier:frontiers
                   UnexploredNodes:unexploredNodes
@@ -145,48 +146,37 @@
                            OnPath:currentPath
               WithTotalKnownPaths:pathList];
     
-    
-    for (NSMutableArray *currPath in pathList) {
-        for (PathNode *pathNode in currPath) {
-            printf("%s ", pathNode.name.UTF8String);
+    for (Path *currPath in pathList) {
+        for (PathNode *pathNode in currPath.nodes) {
+                printf("%s ", pathNode.name.UTF8String);
         }
-        printf("\r\n");
+        printf("%lf \r\n", currPath.pathCost);
     }
-    
-//        NSMutableArray *sortedNeighbour = [NSMutableArray arrayWithCapacity:neighbourEdges.count];
-//        NSMutableArray *sortedNeighbourStepCost = [NSMutableArray arrayWithCapacity:neighbourEdges.count];
-//        
-//        // Get neighbour nodes
-//        for(PathEdge *currEdge in neighbourEdges) {
-//            PathNode *neighbourStateNode = (currEdge.nodeOne == currentStateNode)?currEdge.nodeTwo:currEdge.nodeOne;
-//            [sortedNeighbour addObject:neighbourStateNode];
-//            [sortedNeighbourStepCost addObject:sortedNeighbourStepCost];
-//        }
-        
-        // Now that we have all neighbour nodes, lets sort them based on their step cost;
-
 }
 
--(void) explorePathWithFrontier:(NSMutableArray *) frontiers
+- (void) explorePathWithFrontier:(NSMutableArray *)frontiers
                 UnexploredNodes:(NSMutableSet *) unexploredNodes
                   ExploredNodes:(NSMutableSet *) exploredNodes
                         ForGoal:(PathNode*) goal
-                         OnPath:(NSMutableArray *) currentPathNodes
+                         OnPath:(Path *) currentPath
             WithTotalKnownPaths:(NSMutableArray *) pathList {
     
     if(0 == frontiers.count) {
         return;
     }
+    
     while(frontiers.count > 0) {
-        // Remove current node from frontiers;
-        PathNode *currentStateNode = frontiers[0];
-        [currentPathNodes addObject:currentStateNode];
-        [frontiers removeObject:currentStateNode];
         
+        // Remove current node from frontiers
+        Path *currentPath = [self fetchCheapestPathFromFrontier:frontiers];
+        
+        // Get the leaf state node
+        PathNode *currentStateNode = currentPath.nodes[currentPath.nodes.count - 1];
+        [frontiers removeObject:currentPath];
         [exploredNodes addObject:currentStateNode];
         
         if(goal == currentStateNode) {
-            [pathList addObject:currentPathNodes];
+            [pathList addObject:currentPath];
             continue;
         }
         
@@ -199,10 +189,25 @@
         for(PathEdge *edge in neighbourEdges) {
             PathNode *neighbourNode = (edge.nodeOne == currentStateNode)?edge.nodeTwo : edge.nodeOne;
             if(![exploredNodes containsObject:neighbourNode]) {
-                [frontiers addObject:neighbourNode];
+                Path *newPath = [[Path alloc] init];
+                [newPath.nodes addObjectsFromArray:currentPath.nodes];
+                [newPath.nodes addObject:neighbourNode];
+                newPath.pathCost = currentPath.pathCost + edge.cost;
+                [frontiers addObject:newPath];
             }
         }
+        
+        NSLog(@"frontiers %@", frontiers);
+        NSLog(@"currentPathNodes %@", currentPath);
+        
+//        [self explorePathWithFrontier:frontiers
+//                      UnexploredNodes:unexploredNodes
+//                        ExploredNodes:exploredNodes
+//                              ForGoal:goal
+//                               OnPath:currentPathNodes
+//                  WithTotalKnownPaths:pathList];
     }
+    
 //    for(PathNode *currentStateNode in frontiers) {
 //        // Remove current node from frontiers;
 //        [currentPathNodes addObject:currentStateNode];
@@ -228,8 +233,23 @@
 //    }
 }
 
--(PathNode *) pathNodeWithName:(NSString *)nodeName {
+- (Path *)fetchCheapestPathFromFrontier : (NSMutableArray *)frontier {
+    Path *cheapestPath = nil;
+    
+    if(frontier != nil) {
+        cheapestPath = frontier[0];
+        for(Path *path in frontier) {
+            if(cheapestPath.pathCost > path.pathCost) {
+                cheapestPath = path;
+            }
+        }
+    }
+    
+    return cheapestPath;
+}
 
+- (PathNode *) pathNodeWithName:(NSString *)nodeName {
+    
     PathNode *node = nil;
     for(PathNode *currNode in _nodes) {
         if([currNode.name isEqualToString:nodeName]) {
